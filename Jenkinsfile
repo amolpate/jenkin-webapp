@@ -12,7 +12,7 @@ pipeline {
 	}
 	
 	parameters {
-		String(name:'MODULE', defaultValue:'LOS', description:'Loan Origination Management')
+		string(name:'MODULE', defaultValue:'LOS', description:'Loan Origination Management')
 		choice(name:'MODULE_TYPE', choices:['LOS','LMS','Collection'], description: 'Select module type')
 		booleanParam(name:'DEBUG_MODE', defaultValue:false, description:'Enable debug logs?')
 	}
