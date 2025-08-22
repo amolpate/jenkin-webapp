@@ -55,4 +55,13 @@ pipeline {
             }
         }
     }
+	
+	post {
+		always {
+			echo "SCM pipeline handling POC success"
+		}
+		failure {
+			echo "SCM pipeline handling POC fail"
+		}
+	}
 }
