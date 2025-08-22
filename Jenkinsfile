@@ -1,0 +1,16 @@
+node {
+    def mvnHome = tool name:'MAVEN-3.9.9', type: 'maven'
+    def jdkHome = tool name:'JDK17', type: 'jdk'
+    stage('checkout') {
+        git branch:'main', url:'https://github.com/amolpate/jenkin-webapp.git'
+    }
+    stage('build') {
+        bat "${mvnHome}\\bin\\mvn clean package -f jenkin/pom.xml"
+    }
+    try {
+        echo "Spring boot application build successfully completed!"
+    } catch (err) {
+        echo "Build failed"
+        throw err
+    }
+}
