@@ -11,7 +11,20 @@ pipeline {
         DEPLOY_DIR = "jenkin/target"
 	}
 	
+	parameters {
+		String(name:'MODULE', defaultValue:'LOS', description:'Loan Origination Management')
+		choice(name:'MODULE_TYPE', choices:['LOS','LMS','Collection'], description: 'Select module type')
+		booleanParam(name:'DEBUG_MODE', defaultValue:false, description:'Enable debug logs?')
+	}
+	
     stages {
+		stage('show_parameteres') {
+			steps {
+				echo "Module Name: ${params.MODULE}"
+				echo "Module Type Name: ${params.MODULE_TYPE}"
+				echo "Debug Mode Name: ${params.DEBUG_MODE}"
+			}
+		}
 		stage('show_variables') {
 			steps {
 				echo "***** Jenkins built-in environment variables *****"
