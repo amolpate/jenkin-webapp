@@ -5,9 +5,16 @@ pipeline {
         jdk 'JDK17'
     }
 	
+	environment {
+		APP_NAME   = "JenkinWebApp"
+        APP_PORT   = "9090"
+        DEPLOY_DIR = "jenkin/target"
+	}
+	
     stages {
 		stage('show_variables') {
 			steps {
+				echo "***** Jenkins built-in environment variables *****"
 				echo "Build ID        = ${env.BUILD_ID}"
                 echo "Build Number    = ${env.BUILD_NUMBER}"
                 echo "Build Tag       = ${env.BUILD_TAG}"
@@ -18,6 +25,10 @@ pipeline {
                 echo "Job Name        = ${env.JOB_NAME}"
                 echo "Node Name       = ${env.NODE_NAME}"
                 echo "Workspace       = ${env.WORKSPACE}"
+				echo "***** Setting environment variables *****"
+                echo "Workspace       = ${env.APP_NAME}"
+                echo "Workspace       = ${env.APP_PORT}"
+                echo "Workspace       = ${env.DEPLOY_DIR}"
 			}
 		}
         stage('Checkout') {
