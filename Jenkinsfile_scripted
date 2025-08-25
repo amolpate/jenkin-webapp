@@ -1,0 +1,31 @@
+node {
+    def mvnHome = tool name:'MAVEN-3.9.9', type: 'maven'
+    def jdkHome = tool name:'JDK17', type: 'jdk'
+    
+	properties([
+        parameters([
+            string(name: 'APP_PORT', defaultValue: '9090', description: 'Port for Spring Boot App'),
+            choice(name: 'ENVIRONMENT', choices: ['dev', 'qa', 'prod'], description: 'Select environment'),
+            booleanParam(name: 'DEBUG_MODE', defaultValue: false, description: 'Enable debug logs?')
+        ])
+    ])
+
+    stage('Show Params') {
+        echo "Running on port: ${params.APP_PORT}"
+        echo "Environment: ${params.ENVIRONMENT}"
+        echo "Debug Mode: ${params.DEBUG_MODE}"
+    }
+	
+	stage('checkout') {
+        git branch:'main', url:'https://github.com/amolpate/jenkin-webapp.git'
+    }
+    stage('build') {
+        bat "${mvnHome}\\bin\\mvn clean package -f jenkin/pom.xml"
+    }
+    try {
+        echo "Spring boot application build successfully completed!"
+    } catch (err) {
+        echo "Build failed"
+        throw err
+    }
+}
