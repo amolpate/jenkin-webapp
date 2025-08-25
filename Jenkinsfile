@@ -17,21 +17,15 @@ pipeline {
 		booleanParam(name:'DEBUG_MODE', defaultValue:false, description:'Enable debug logs?')
 	}
 	
-	triggers {
-		// (MINUTE   HOUR   DAY_OF_MONTH   MONTH   DAY_OF_WEEK) 
-		cron('H/5 * * * *')	// Every 5 minute
-		cron('H * * * *')	// Every hour
-		cron('H 2 * * *')	// Every day at 2 AM
-		cron('H 2 * * 1')	// Every Monday at 2 AM
-		cron('H 0 * * *')	// Every day at midnight (12 AM)
-		cron('H 12 * * 0')	// Every Sunday at 12 PM (noon)
-		cron('H 9 1 * *')	// 9 AM on 1st of every month
-		cron('H 9 * * 1-5')	// only weekdays at 9 AM
-		cron('H 0 */2 * * *')	// Every 2 hours
-		cron('H/30 8-18 * * 1-5')	// Every 30 minutes between 8 AM–6 PM, Monday–Friday
-	}
+	
 	
     stages {
+		stage('branch_name') {
+			steps {
+				echo "This is my newdev1 branch for jenkin implemetation";
+			}
+		}
+		
 		stage('show_parameteres') {
 			steps {
 				echo "Module Name: ${params.MODULE}"
